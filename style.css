@@ -374,10 +374,10 @@ footer a:hover { color: var(--accent-success); }
 }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+::-webkit-scrollbar-track { background: #16213e; }
 ::-webkit-scrollbar-thumb {
     background: #1a1a2e;
-    border-radius: 5px;
+    border-radius: 0px;
     transition: background var(--transition-fast);
 }
 ::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.5); }
@@ -412,3 +412,4 @@ footer a:hover { color: var(--accent-success); }
     footer { padding: 20px; font-size: 13px; }
 
 }
+
