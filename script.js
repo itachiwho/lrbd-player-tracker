@@ -69,7 +69,7 @@ async function fetchWithTimeout(url, { timeout = 5000 } = {}) {
 
 async function fetchShiftGroups() {
   try {
-    const res = await fetch(CSV_URL, { cache: "no-store" });
+    const res = await fetchWithTimeout(SHIFTS_API, { timeout: 6000 });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     
     const csvText = await res.text();
@@ -113,10 +113,10 @@ async function getMetrics() {
   const json = await res.json();
   if (json.statusCode !== 200) {
     console.warn("Metrics API error, using defaults");
-    return { maxPlayers: "?", uptime: "N/A", playerCount: 0 };
+    return { maxPlayers: "?", uptime: "N/A", playerCount: lastPlayers.length || 0 };
   }
   
-  return json.data || { maxPlayers: "?", uptime: "N/A", playerCount: 0 };
+  return json.data || { maxPlayers: "?", uptime: "N/A", playerCount: lastPlayers.length || 0 };
 }
 
 // === UI ===
@@ -199,7 +199,7 @@ function renderPlayers() {
     const license = p?.licenseIdentifier || "";
     
     const playerData = shiftMap.get(license);
-    const icName = playerData ? playerData[0].icName : "-";
+    const icName = playerData ? [...new Set(playerData.map(d => d.icName))].join(" • ") : "-";
     const roles = playerData ? playerData.map(d => d.shift).join(" • ") : "-";
 
     table.insertAdjacentHTML("beforeend", `
@@ -235,17 +235,18 @@ async function loadData() {
     const sorted = players.slice().sort((a, b) => (a?.source ?? 0) - (b?.source ?? 0));
 
     lastPlayers = sorted;
-    lastMeta = metrics;
+    lastMeta = { ...metrics, playerCount: sorted.length }; // Always use actual player count for accuracy
     lastUpdated = nowTime();
 
     hideWarning();
-    setMeta(metrics);
+    setMeta(lastMeta);
     renderPlayers();
   } catch (err) {
     console.error("Load failed:", err);
     if (lastPlayers.length) {
       const ts = lastUpdated || "N/A";
       showWarning(`⚠ Couldn't update, showing last data — last updated at ${ts}`);
+      lastMeta.playerCount = lastPlayers.length; // Fallback player count
       setMeta(lastMeta);
       renderPlayers();
     } else {
