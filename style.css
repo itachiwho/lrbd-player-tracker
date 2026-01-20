@@ -254,6 +254,14 @@ select:hover { border-color: var(--border-accent); }
     box-shadow: var(--shadow-sm);
 }
 
+.players-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.players-table tbody tr:last-child {
+    border-bottom: none;
+}
+
 .players-table th {
     background: var(--table-header);
     color: var(--text-secondary);
@@ -412,4 +420,5 @@ footer a:hover { color: var(--accent-success); }
     footer { padding: 20px; font-size: 13px; }
 
 }
+
 
