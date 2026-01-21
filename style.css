@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&display=swap');
 
 :root {
     --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -36,7 +36,7 @@ body {
     background: var(--bg-gradient);
     background-attachment: fixed;
     color: var(--text-color);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -46,11 +46,12 @@ body {
     background: var(--wrapper-bg);
     min-height: 100vh;
     display: flex; flex-direction: column;
-    margin: 32px auto;
-    border-radius: 16px;
+    margin: 0 auto;
+    border-radius: 0;
     box-shadow: var(--shadow-lg);
     overflow: hidden;
     border: 1px solid var(--border-color);
+    border-top: none;
 }
 
 header {
@@ -180,54 +181,57 @@ select:hover { border-color: var(--border-accent); }
 }
 
 #warning {
+    background: rgba(243, 156, 18, 0.15);
+    border: 1px solid var(--accent-warning);
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin: 16px 32px 0;
     text-align: center;
-    padding: 12px 32px;
     font-weight: 500;
     color: var(--accent-warning);
-    background: rgba(243, 156, 18, 0.08);
-    border-bottom: 1px solid var(--border-color);
+    font-size: 14px;
 }
 
 .tabs {
     position: sticky; top: 164px; z-index: 80;
     display: flex; align-items: center;
+    border-bottom: 1px solid var(--border-color);
     background: var(--header-bg);
-    padding: 0 32px;
     backdrop-filter: blur(var(--blur-strength));
     -webkit-backdrop-filter: blur(var(--blur-strength));
-    border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
+    padding: 0 32px;
 }
 
 .tab {
     padding: 16px 24px;
     cursor: pointer;
-    font-size: 15px; font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: all var(--transition-fast);
+    font-weight: 500; font-size: 15px;
     color: var(--text-secondary);
-    border-bottom: 3px solid transparent;
-    transition: all var(--transition-normal);
 }
 
 .tab:hover {
     color: var(--text-color);
-    border-bottom-color: var(--border-accent);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .tab.active {
     color: var(--accent-primary);
     border-bottom-color: var(--accent-primary);
+    font-weight: 600;
 }
 
 #current-datetime {
     margin-left: auto;
     padding: 16px 0;
     color: var(--text-muted);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.4px;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.3px;
     white-space: nowrap;
     user-select: none;
-    transition: color var(--transition-fast);
+    transition: color var(--transition-normal);
 }
 #current-datetime:hover { color: var(--text-secondary); }
 
@@ -254,14 +258,6 @@ select:hover { border-color: var(--border-accent); }
     box-shadow: var(--shadow-sm);
 }
 
-.players-table tbody tr {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.players-table tbody tr:last-child {
-    border-bottom: none;
-}
-
 .players-table th {
     background: var(--table-header);
     color: var(--text-secondary);
@@ -275,7 +271,7 @@ select:hover { border-color: var(--border-accent); }
 
 .players-table td {
     padding: 14px 12px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     font-size: 14px;
     transition: background var(--transition-fast);
 }
@@ -337,8 +333,8 @@ select:hover { border-color: var(--border-accent); }
 
 footer {
     text-align: center;
-    padding: 2px 32px;
-    font-size: 15px;
+    padding: 1px 32px;
+    font-size: 16px;
     color: var(--text-secondary);
     font-weight: 500;
     margin-top: auto;
@@ -381,17 +377,70 @@ footer a:hover { color: var(--accent-success); }
     100% { transform: rotate(360deg); }
 }
 
+/* Toast Notification */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(46, 204, 113, 0.95);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(10px);
+    animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s;
+    pointer-events: none;
+}
+
+.toast::before {
+    content: "✓";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #16213e; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
 ::-webkit-scrollbar-thumb {
-    background: #1a1a2e;
-    border-radius: 0px;
+    background: rgba(52, 152, 219, 0.3);
+    border-radius: 5px;
     transition: background var(--transition-fast);
 }
 ::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.5); }
 
 @media (max-width: 1200px) {
-    #wrapper { width: 92%; margin: 20px auto; }
+    #wrapper { width: 92%; margin: 0 auto; }
 }
 
 @media (max-width: 768px) {
@@ -418,7 +467,4 @@ footer a:hover { color: var(--accent-success); }
         padding: 10px 8px; font-size: 13px;
     }
     footer { padding: 20px; font-size: 13px; }
-
 }
-
-
