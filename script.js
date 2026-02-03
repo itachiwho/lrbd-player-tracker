@@ -88,7 +88,7 @@ async function fetchShiftGroups() {
       }
     }
 
-    console.log("✅ Loaded shift groups:", groups);
+    console.log("✅ Loaded shifts:", Object.keys(groups).map(k => `${k}: ${groups[k].length}`).join(", "));
     return groups;
   } catch (err) {
     console.error("❌ Failed to load shift groups:", err);
