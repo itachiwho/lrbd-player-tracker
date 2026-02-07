@@ -1,0 +1,56 @@
+# Vercel build & deployment files
+.vercel
+.output
+.next
+dist
+build
+
+# Environment variables & secrets
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+
+# Node.js / npm / yarn / pnpm
+node_modules
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.pnpm-store
+package-lock.json    # ← optional: keep if you want exact lockfile, but many ignore it
+yarn.lock            # ← same, choose one lockfile
+
+# Editor / IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs & temp files
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Testing / coverage
+coverage/
+.nyc_output/
+
+# Optional: if you have local-only scripts or tools
+local/
+scripts/local-*
+
+# If you use Docker locally
+docker-compose.override.yml

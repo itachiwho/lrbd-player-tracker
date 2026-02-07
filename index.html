@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legacy BD Player List</title>
+  <link rel="icon" href="assets/LRBD.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="wrapper">
+    <header>
+      <div id="title">
+        <img src="assets/LRBD.png" alt="Server Logo" id="server-logo">
+        <span id="server-title">Legacy Roleplay Bangladesh | Fivem Player Tracker | Legacy BD PD</span>
+      </div>
+      <div id="server-meta">
+        <span id="server-count">(0/0)</span>
+        <span id="server-uptime">Uptime: N/A</span>
+      </div>
+    </header>
+
+    <section>
+      <div class="controls-wrapper">
+        <input type="text" id="search" placeholder="Search by name, ID, or license...">
+        <select id="shift-filter">
+          <option value="all">All Players</option>
+          <option value="Shift-1">Shift-1</option>
+          <option value="Shift-2">Shift-2</option>
+          <option value="Full Shift">Full Shift</option>
+          <option value="Staff">Staff</option>
+        </select>
+      </div>
+      <div id="refresh-status">
+        <img src="assets/refresh.svg" alt="Refresh Icon">
+        <span id="refresh-timer">30s</span>
+      </div>
+    </section>
+
+    <div id="warning" style="display:none;"></div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="online">Online Players</div>
+      <div class="tab" data-tab="notes">Notices & Features</div>
+      <div id="current-datetime"></div>
+    </div>
+
+    <div class="tab-content active" id="online">
+      <table id="players-table" class="players-table"></table>
+    </div>
+
+    <div class="tab-content" id="notes">
+      <div class="notice-list">
+        <div class="notice">
+          <h3>Advanced Tracking</h3>
+          <p>
+            Players are now tracked, so even if they change their FiveM username, 
+            they will remain in their assigned shift groups.
+          </p>
+        </div>
+
+        <div class="notice">
+          <h3>Shift Groups Source</h3>
+          <p>
+            Shift groups load from Separate Roster database. If that API is slow 
+    or temporarily unavailable, roles may briefly show as "-" until data loads.
+          </p>
+        </div>
+        
+        <div class="notice">
+          <h3>Refresh & Updates</h3>
+          <p>
+            The list auto-refreshes every 30s. You can also click the refresh icon.
+            "Last updated" time shows the most recent successful fetch.
+          </p>
+        </div>
+
+        <div class="notice">
+          <h3>Search & Filters</h3>
+          <p>
+            Search matches by player <strong>Name</strong>, <strong>ID</strong>, and <strong>License ID</strong>.
+            The Shift filter shows only players in specific shifts.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="table-footer">
+      <p>
+        A dedicated player status tracker for LRBD PD. Created by 
+        <a href="https://discord.com/users/665163856145809464" target="_blank">@itachi_0</a>.
+      </p>
+    </footer>
+  </div>
+
+  <div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
