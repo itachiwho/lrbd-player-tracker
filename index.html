@@ -3,101 +3,159 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legacy BD Player List</title>
-  <link rel="icon" href="assets/LRBD.png" type="image/png">
-  <link rel="stylesheet" href="style.css">
+  <title>We've Moved - Fivem Player Tracker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Mulish', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: rgba(15, 20, 25, 0.95);
+      border-radius: 20px;
+      padding: 60px 50px;
+      text-align: center;
+      max-width: 600px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: slideUp 0.6s ease;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      animation: bounce 2s ease infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 15px;
+      letter-spacing: -1px;
+    }
+    
+    .subtitle {
+      font-size: 22px;
+      color: #8b92a0;
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+    
+    .message {
+      font-size: 18px;
+      color: #b0b8c4;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+    
+    .new-link {
+      display: inline-block;
+      background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+      color: white;
+      text-decoration: none;
+      padding: 18px 50px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+      letter-spacing: 0.5px;
+    }
+    
+    .new-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(52, 152, 219, 0.5);
+    }
+    
+    .new-link:active {
+      transform: translateY(-1px);
+    }
+    
+    .url-text {
+      margin-top: 25px;
+      font-size: 14px;
+      color: #5c6370;
+      word-break: break-all;
+    }
+    
+    .url-text a {
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .url-text a:hover {
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 40px 30px;
+      }
+      
+      h1 {
+        font-size: 36px;
+      }
+      
+      .subtitle {
+        font-size: 18px;
+      }
+      
+      .message {
+        font-size: 16px;
+      }
+      
+      .icon {
+        font-size: 60px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div id="wrapper">
-    <header>
-      <div id="title">
-        <img src="assets/LRBD.png" alt="Server Logo" id="server-logo">
-        <span id="server-title">Legacy Roleplay Bangladesh | Fivem Player Tracker | Legacy BD PD</span>
-      </div>
-      <div id="server-meta">
-        <span id="server-count">(0/0)</span>
-        <span id="server-uptime">Uptime: N/A</span>
-      </div>
-    </header>
-
-    <section>
-      <div class="controls-wrapper">
-        <input type="text" id="search" placeholder="Search by name, ID, or license...">
-        <select id="shift-filter">
-          <option value="all">All Players</option>
-          <option value="Shift-1">Shift-1</option>
-          <option value="Shift-2">Shift-2</option>
-          <option value="Full Shift">Full Shift</option>
-          <option value="Staff">Staff</option>
-        </select>
-      </div>
-      <div id="refresh-status">
-        <img src="assets/refresh.svg" alt="Refresh Icon">
-        <span id="refresh-timer">30s</span>
-      </div>
-    </section>
-
-    <div id="warning" style="display:none;"></div>
-
-    <div class="tabs">
-      <div class="tab active" data-tab="online">Online Players</div>
-      <div class="tab" data-tab="notes">Notices & Features</div>
-      <div id="current-datetime"></div>
-    </div>
-
-    <div class="tab-content active" id="online">
-      <table id="players-table" class="players-table"></table>
-    </div>
-
-    <div class="tab-content" id="notes">
-      <div class="notice-list">
-        <div class="notice">
-          <h3>Advanced Tracking</h3>
-          <p>
-            Players are now tracked, so even if they change their FiveM username, 
-            they will remain in their assigned shift groups.
-          </p>
-        </div>
-
-        <div class="notice">
-          <h3>Shift Groups Source</h3>
-          <p>
-            Shift groups load from Separate Roster database. If that API is slow 
-    or temporarily unavailable, roles may briefly show as "-" until data loads.
-          </p>
-        </div>
-        
-        <div class="notice">
-          <h3>Refresh & Updates</h3>
-          <p>
-            The list auto-refreshes every 30s. You can also click the refresh icon.
-            "Last updated" time shows the most recent successful fetch.
-          </p>
-        </div>
-
-        <div class="notice">
-          <h3>Search & Filters</h3>
-          <p>
-            Search matches by player <strong>Name</strong>, <strong>ID</strong>, and <strong>License ID</strong>.
-            The Shift filter shows only players in specific shifts.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <footer class="table-footer">
-      <p>
-        A dedicated player status tracker for LRBD PD. Created by 
-        <a href="https://discord.com/users/665163856145809464" target="_blank">@itachi_0</a>.
-      </p>
-    </footer>
+  <div class="container">
+    <div class="icon">🚀</div>
+    <h1>We've Moved!</h1>
+    <p class="subtitle">New & Improved Player Tracker</p>
+    <p class="message">
+      Our player tracking system has been upgraded with better performance, 
+      real-time updates, and an enhanced user experience.
+    </p>
+    <a href="https://fivem-player-list.vercel.app/" class="new-link">
+      Visit New Site →
+    </a>
+    <p class="url-text">
+      New URL: <a href="https://playerlist.itachiweb.top/">fivem-player-list.vercel.app</a>
+    </p>
   </div>
-
-  <div class="loader" id="loader">
-    <div class="loader-spinner"></div>
-  </div>
-
-  <script src="script.js"></script>
 </body>
-
 </html>
